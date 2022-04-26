@@ -15,9 +15,14 @@ public class CircuitManager : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
     }
-    public GameObject Fonte;
+    public GameObject FontePositive;
+    public GameObject FonteNegative;
+    public GameObject PlayButton;
+    public GameObject PauseButton;
+    public GameObject PlayIsActivePanel;
     public int CommandLimit;
     public CommandImages MainCommandLine;
+    public List<Led> Leds;
     public List<GameObject> Edges;
     private List<CommandType> Commands;
     private List<Loop> Loops;
@@ -36,7 +41,7 @@ public class CircuitManager : MonoBehaviour
 
     void Update()
     {
-        
+        PuzzleCompleted();
     }
 
     public void AddCommand(int command) {
@@ -61,10 +66,16 @@ public class CircuitManager : MonoBehaviour
 
     public void Play() {
         ReadCommands();
+        PlayButton.SetActive(false);
+        PauseButton.SetActive(true);
+        PlayIsActivePanel.SetActive(true);
     }
 
     public void Pause() {
         Reset();
+        PlayButton.SetActive(true);
+        PauseButton.SetActive(false);
+        PlayIsActivePanel.SetActive(false);
     }
 
     public void ClearList() {
@@ -101,17 +112,36 @@ public class CircuitManager : MonoBehaviour
                 case CommandType.L4:
                     break;
                 default:
-                    current.ActivateEdge(Commands[i]);
                     currentVertex = current.ChangeCurrentVertex(Commands[i],currentVertex);
+                    current.ActivateEdge(Commands[i]);
                     break;
             }
         }
     }
 
     private void Reset() {
-        currentVertex = Fonte;
+        currentVertex = FontePositive;
         foreach(GameObject e in Edges) {
             e.GetComponent<Edge>().Reset();
         }
+        foreach(Led led in Leds) {
+            led.Reset();
+        }
+    }
+
+    private void PuzzleCompleted() {
+        if(LightbuldCompleted() && FonteNegative.GetComponent<Vertex>().RightEdge.GetComponent<Edge>().isActivated()) {
+            Debug.Log("Completo!");
+        }
+    }
+
+    private bool LightbuldCompleted() {
+        foreach(Led led in Leds) {
+            if(!led.LightOn()) {
+                return false;
+            }
+        }
+        return true;
+        
     }
 }

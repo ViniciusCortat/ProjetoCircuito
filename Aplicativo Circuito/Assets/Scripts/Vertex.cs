@@ -37,18 +37,22 @@ public class Vertex : MonoBehaviour
     }
 
     public GameObject ChangeCurrentVertex(CommandType arrow, GameObject current) {
-        if(arrow == CommandType.RightArrow && RightEdge != null) {
+        if(arrow == CommandType.RightArrow && RightEdge != null && !IsEdgeActivated(RightEdge)) {
             return RightEdge.GetComponent<Edge>().ChangeCurrentVertex(current);
         }
-        if(arrow == CommandType.UpArrow && UpEdge != null) {
+        if(arrow == CommandType.UpArrow && UpEdge != null && !IsEdgeActivated(UpEdge)) {
             return UpEdge.GetComponent<Edge>().ChangeCurrentVertex(current);
         }
-        if(arrow == CommandType.LeftArrow && LeftEdge != null) {
+        if(arrow == CommandType.LeftArrow && LeftEdge != null && !IsEdgeActivated(LeftEdge)) {
             return LeftEdge.GetComponent<Edge>().ChangeCurrentVertex(current);
         }
-        if(arrow == CommandType.DownArrow && DownEdge != null) {
+        if(arrow == CommandType.DownArrow && DownEdge != null && !IsEdgeActivated(DownEdge)) {
             return DownEdge.GetComponent<Edge>().ChangeCurrentVertex(current);
         }
         return current;
+    }
+
+    private bool IsEdgeActivated(GameObject edge) {
+        return edge.GetComponent<Edge>().isActivated();
     }
 }
