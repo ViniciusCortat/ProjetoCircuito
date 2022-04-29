@@ -1,25 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CircuitManager : MonoBehaviour
 {
-    public static CircuitManager Instance { get; private set; }
-    private void Awake() 
-    {
-        if(Instance != null && Instance != this) {
-            Destroy(gameObject);
-        }
-        else {
-            Instance = this;
-        }
-        DontDestroyOnLoad(gameObject);
-    }
+    public int MelhorCaminho;
+    public int DesafioLevel;
     public GameObject FontePositive;
     public GameObject FonteNegative;
     public GameObject PlayButton;
     public GameObject PauseButton;
     public GameObject PlayIsActivePanel;
+    public GameObject ResultPanel;
+    public GameObject MenuPanel;
+    public TextMeshProUGUI ResultText;
     public int CommandLimit;
     public CommandImages MainCommandLine;
     public List<Led> Leds;
@@ -33,7 +28,7 @@ public class CircuitManager : MonoBehaviour
 
     void Start()
     {
-        Reset();
+        currentVertex = FontePositive;
         Commands = new List<CommandType>();
         Loops = new List<Loop>();
         Conditionals = new List<Conditional>();
@@ -62,6 +57,10 @@ public class CircuitManager : MonoBehaviour
                 Conditionals[Conditionals.Count - 1].AddElseCommand((CommandType) command);
             }
         }
+    }
+
+    public void OpenMenuPanel() {
+        MenuPanel.SetActive(true);
     }
 
     public void Play() {
@@ -131,7 +130,15 @@ public class CircuitManager : MonoBehaviour
 
     private void PuzzleCompleted() {
         if(LightbuldCompleted() && FonteNegative.GetComponent<Vertex>().RightEdge.GetComponent<Edge>().isActivated()) {
-            Debug.Log("Completo!");
+            if(Commands.Count <= MelhorCaminho) {
+                ResultText.text = "<color=#272A7E>Melhor Caminho Alcançado!</color>";
+                Puzzles.GetInstance().SetStatus("Best", DesafioLevel-1);
+            }
+            else {
+                ResultText.text = "<color=#C84938>Melhor Caminho não foi Alcançado!</color>";
+                Puzzles.GetInstance().SetStatus("Completo", DesafioLevel-1);
+            }
+            ResultPanel.SetActive(true);
         }
     }
 

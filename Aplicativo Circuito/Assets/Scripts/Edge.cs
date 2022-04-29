@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Edge : MonoBehaviour
 {
-    private bool Activated;
+    private bool Activated = false;
     private GameObject Vertex1;
     private GameObject Vertex2;
 
