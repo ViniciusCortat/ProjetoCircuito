@@ -20,7 +20,7 @@ public class LevelManager : MonoBehaviour
     }
 
     private void RemoveLock() {
-        for(int i=0;i<17;i++) {
+        for(int i=0;i<14;i++) {
             if(puzzles.GetStatus(i) != "Incompleto") {
                 Edges[i].color = Color.yellow;
                 Locks[i].SetActive(false);
@@ -29,7 +29,7 @@ public class LevelManager : MonoBehaviour
     }
 
     private void StatusBallColor() {
-        for(int i=0;i<18;i++) {
+        for(int i=0;i<15;i++) {
             
             if(puzzles.GetStatus(i) == "Incompleto") {
                 StatusBall[i].color = Color.red;

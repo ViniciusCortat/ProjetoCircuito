@@ -6,7 +6,7 @@ public sealed class Puzzles
 {
     private Puzzles() {
         Status = new List<string>();
-        for(int i = 0; i < 18; i++) {
+        for(int i = 0; i < 15; i++) {
             Status.Add("Incompleto");
         }
     }

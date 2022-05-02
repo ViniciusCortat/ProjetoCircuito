@@ -22,31 +22,31 @@ public class Vertex : MonoBehaviour
     }
 
     public void ActivateEdge(CommandType arrow) {
-        if(arrow == CommandType.RightArrow && RightEdge != null) {
+        if(arrow == CommandType.RightArrow && RightEdge != null  && RightEdge.activeSelf) {
             RightEdge.GetComponent<Edge>().ActivateEdge();
         }
-        if(arrow == CommandType.UpArrow && UpEdge != null) {
+        if(arrow == CommandType.UpArrow && UpEdge != null && UpEdge.activeSelf) {
             UpEdge.GetComponent<Edge>().ActivateEdge();
         }
-        if(arrow == CommandType.LeftArrow && LeftEdge != null) {
+        if(arrow == CommandType.LeftArrow && LeftEdge != null && LeftEdge.activeSelf) {
             LeftEdge.GetComponent<Edge>().ActivateEdge();
         }
-        if(arrow == CommandType.DownArrow && DownEdge != null) {
+        if(arrow == CommandType.DownArrow && DownEdge != null && DownEdge.activeSelf) {
             DownEdge.GetComponent<Edge>().ActivateEdge();
         }
     }
 
     public GameObject ChangeCurrentVertex(CommandType arrow, GameObject current) {
-        if(arrow == CommandType.RightArrow && RightEdge != null && !IsEdgeActivated(RightEdge)) {
+        if(arrow == CommandType.RightArrow && RightEdge != null && !IsEdgeActivated(RightEdge) && RightEdge.activeSelf) {
             return RightEdge.GetComponent<Edge>().ChangeCurrentVertex(current);
         }
-        if(arrow == CommandType.UpArrow && UpEdge != null && !IsEdgeActivated(UpEdge)) {
+        if(arrow == CommandType.UpArrow && UpEdge != null && !IsEdgeActivated(UpEdge) && UpEdge.activeSelf) {
             return UpEdge.GetComponent<Edge>().ChangeCurrentVertex(current);
         }
-        if(arrow == CommandType.LeftArrow && LeftEdge != null && !IsEdgeActivated(LeftEdge)) {
+        if(arrow == CommandType.LeftArrow && LeftEdge != null && !IsEdgeActivated(LeftEdge) && LeftEdge.activeSelf) {
             return LeftEdge.GetComponent<Edge>().ChangeCurrentVertex(current);
         }
-        if(arrow == CommandType.DownArrow && DownEdge != null && !IsEdgeActivated(DownEdge)) {
+        if(arrow == CommandType.DownArrow && DownEdge != null && !IsEdgeActivated(DownEdge) && DownEdge.activeSelf) {
             return DownEdge.GetComponent<Edge>().ChangeCurrentVertex(current);
         }
         return current;
