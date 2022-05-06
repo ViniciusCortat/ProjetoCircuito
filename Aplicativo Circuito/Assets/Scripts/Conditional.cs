@@ -1,43 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Conditional
+public class Conditional 
 {
     public Conditional() {
-
-    }
-    private List<CommandType> BaseCommands;
-
-    private List<CommandType> ElseCommands;
-
-    private int CommandIndex = 0;
-
-    private bool BaseSelected = true;
-
-    public void AddBaseCommand(CommandType command) {
-        BaseCommands.Add(command);
+        ifCommands = new List<CommandType>();
+        elseCommands = new List<CommandType>();
     }
 
-    public void AddElseCommand(CommandType command) {
-        ElseCommands.Add(command);
-    }
+    private List<CommandType> ifCommands;
+    private List<CommandType> elseCommands;
+    private bool IfSelected = true;
+    private bool IfRunning = true;
 
-    public CommandType CurrentCommand() {
-        if(BaseSelected) {
-            return BaseCommands[CommandIndex];
+    public void AddCommand(CommandType command) {
+        if(IfSelected) {
+            ifCommands.Add(command);
         }
-        return ElseCommands[CommandIndex];
+        else {
+            elseCommands.Add(command);
+        }
     }
 
-    public void NextCommand() {
-        CommandIndex++;
+    public CommandType CurrentCommand(int index) {
+        if(IfRunning) {
+            return ifCommands[index];
+        }
+        else {
+            return elseCommands[index];
+        }
     }
 
-    public void SwapCommandLine() {
-        BaseSelected = !BaseSelected;
+    public void SwitchRunning() {
+        IfRunning = !IfRunning;
     }
 
-    public bool IsBaseSelected() {
-        return BaseSelected;
+    public void SetCommand(bool ifOrelse) {
+        IfSelected = ifOrelse;
+    }
+
+    public int Index() {
+        if(IfSelected) {
+            return ifCommands.Count;
+        }
+        else {
+            return elseCommands.Count;
+        }
+    }
+
+    public bool IfOrElse() {
+        return IfSelected;
     }
 }

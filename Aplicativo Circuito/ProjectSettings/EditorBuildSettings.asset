@@ -33,9 +33,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Desafio7.unity
     guid: 036564898263edc4dbf030be06fb0dd4
   - enabled: 1
-    path: Assets/Scenes/Desafio8.unity
+    path: Assets/Scenes/Desafio9.unity
     guid: b0cfb39f480a61048b76e91972965544
   - enabled: 1
-    path: Assets/Scenes/Desafio9.unity
+    path: Assets/Scenes/Desafio8.unity
     guid: 83dfeff766e844f4fb1cdc2785a8bd4d
   m_configObjects: {}

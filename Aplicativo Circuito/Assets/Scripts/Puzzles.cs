@@ -7,7 +7,7 @@ public sealed class Puzzles
     private Puzzles() {
         Status = new List<string>();
         for(int i = 0; i < 15; i++) {
-            Status.Add("Incompleto");
+            Status.Add(PlayerPrefs.GetString("Puzzle_"+i,"Incompleto"));
         }
     }
 
@@ -29,7 +29,16 @@ public sealed class Puzzles
     public void SetStatus(string status, int i) {
         if(Status[i] == "Incompleto" || Status[i] == "Completo") {
             Status[i] = status;
+            PlayerPrefs.SetString("Puzzle_"+i, status);
+            PlayerPrefs.Save();
         }
         
+    }
+
+    public void DeleteSave() {
+        PlayerPrefs.DeleteAll();
+        for(int i = 0; i < 15; i++) {
+            Status[i] = PlayerPrefs.GetString("Puzzle_"+i,"Incompleto");
+        }
     }
 }

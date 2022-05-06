@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class CircuitManager : MonoBehaviour
+public class CircuitManagerC : MonoBehaviour
 {
     public int MelhorCaminho;
     public int DesafioLevel;
@@ -24,12 +24,16 @@ public class CircuitManager : MonoBehaviour
     private GameObject currentVertex;
     private bool LoopSelected = false;
     private bool ConditionalSelected = false;
+    [HideInInspector]
+    public Conditional conditional;
+    public CommandImages ConditionalCommandLine;
 
     void Start()
     {
         currentVertex = FontePositive;
         Commands = new List<CommandType>();
         Loops = new List<Loop>();
+        conditional = new Conditional();
     }
 
     void Update()
@@ -48,7 +52,8 @@ public class CircuitManager : MonoBehaviour
             Loops[Loops.Count - 1].AddCommand((CommandType) command);
         }
         if(ConditionalSelected) {
-            
+            conditional.AddCommand((CommandType) command);
+            ConditionalCommandLine.CreateConditionalImage(conditional.Index() - 1, (CommandType) command, conditional.IfOrElse());
         }
     }
 
@@ -79,6 +84,10 @@ public class CircuitManager : MonoBehaviour
         Loop loop = new Loop();
         Loops.Add(loop);
         LoopSelected = true;
+    }
+
+    public void SwitchConditional() {
+        ConditionalSelected = !ConditionalSelected;
     }
 
     private void ReadCommands() {

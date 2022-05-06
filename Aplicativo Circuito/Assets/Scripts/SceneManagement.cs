@@ -12,4 +12,9 @@ public class SceneManagement : MonoBehaviour
     public void GoNextScene(string name) {
         SceneManager.LoadScene(name, LoadSceneMode.Single);
     }
+
+    public void DeleteSave() {
+        Puzzles.GetInstance().DeleteSave();
+        ReloadPage();
+    }
 }

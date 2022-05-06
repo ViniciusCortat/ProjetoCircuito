@@ -26,7 +26,21 @@ public class CommandImages : MonoBehaviour
         Vector2 pos = new Vector2(InitialPosition.x + i*55, InitialPosition.y);
         GameObject o = Instantiate(ImagePrefab, pos, Quaternion.identity);
         o.transform.SetParent(this.gameObject.transform, false);
-        //o.transform.position = pos;
+        SetImage(type,o.GetComponent<Image>());
+        RotateImage(type,o);
+        CommandsCreated.Add(o);
+    }
+
+    public void CreateConditionalImage(int i, CommandType type, bool ifOrelse) {
+        Vector2 position;
+        if(ifOrelse) {
+            position = new Vector2(InitialPosition.x + i*55, InitialPosition.y);
+        }
+        else {
+            position = new Vector2(InitialPosition.x + i*55, InitialPosition.y - 125);
+        }
+        GameObject o = Instantiate(ImagePrefab, position, Quaternion.identity);
+        o.transform.SetParent(this.gameObject.transform, false);
         SetImage(type,o.GetComponent<Image>());
         RotateImage(type,o);
         CommandsCreated.Add(o);
