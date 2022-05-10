@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class CircuitManagerC : MonoBehaviour
@@ -24,9 +25,17 @@ public class CircuitManagerC : MonoBehaviour
     private GameObject currentVertex;
     private bool LoopSelected = false;
     private bool ConditionalSelected = false;
+    private Coroutine coroutine;
     [HideInInspector]
     public Conditional conditional;
     public CommandImages ConditionalCommandLine;
+    public CommandImages CList;
+    public GameObject conditionalEdge;
+    public GameObject CompletedCondPanel;
+    public TextMeshProUGUI ResultCondText;
+    public GameObject CompletedCondPanel2;
+    public TextMeshProUGUI ResultCondText2;
+    private Sprite CondEdgeSprite;
 
     void Start()
     {
@@ -34,11 +43,13 @@ public class CircuitManagerC : MonoBehaviour
         Commands = new List<CommandType>();
         Loops = new List<Loop>();
         conditional = new Conditional();
+        CondEdgeSprite = conditionalEdge.GetComponent<Image>().sprite;
+        CList.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        PuzzleCompleted();
+        ConditionalPuzzleCompleted();
     }
 
     public void AddCommand(int command) {
@@ -62,22 +73,51 @@ public class CircuitManagerC : MonoBehaviour
     }
 
     public void Play() {
-        ReadCommands();
+        if(conditional.IfOrElseRunning()) {
+            conditionalEdge.GetComponent<Image>().sprite = null;
+        }
+        else {
+            conditionalEdge.SetActive(false);
+        }
+        coroutine = StartCoroutine(ReadCommands());
         PlayButton.SetActive(false);
         PauseButton.SetActive(true);
         PlayIsActivePanel.SetActive(true);
     }
 
     public void Pause() {
+        StopCoroutine(coroutine);
         Reset();
         PlayButton.SetActive(true);
         PauseButton.SetActive(false);
         PlayIsActivePanel.SetActive(false);
+        conditionalEdge.GetComponent<Image>().sprite = CondEdgeSprite;
     }
 
     public void ClearList() {
         Commands.Clear();
         MainCommandLine.Reset();
+    }
+
+    public void EnableCList() {
+        if(!conditional.IsEmpty()) {
+            CList.gameObject.SetActive(true);
+            CList.Reset();
+            conditional.SetCommand(true);
+            for(int i=0;i<conditional.Index();i++) {
+                CList.CreateConditionalImage(i,conditional.GetCommandBySelected(i),conditional.IfOrElse());
+            }
+            conditional.SetCommand(false);
+            for(int i=0;i<conditional.Index();i++) {
+                CList.CreateConditionalImage(i,conditional.GetCommandBySelected(i),conditional.IfOrElse());
+            }
+            conditional.SetCommand(true);
+        }
+    }
+
+    public void ClearCList() {
+        conditional.Clear();
+        ConditionalCommandLine.Reset();
     }
 
     public void AddLoop() {
@@ -90,13 +130,27 @@ public class CircuitManagerC : MonoBehaviour
         ConditionalSelected = !ConditionalSelected;
     }
 
-    private void ReadCommands() {
+    public void PlaySecondCond() {
+        conditional.SwitchRunning();
+        CompletedCondPanel.SetActive(false);
+        Reset();
+        Play();
+    }
+
+    public void FinishConditional() {
+        CompletedCondPanel2.SetActive(false);
+        PuzzleCompleted();
+    }
+
+    private IEnumerator ReadCommands() {
         for(int i=0; i < Commands.Count; i++) {
+            yield return new WaitForSeconds(0.5f);
             Vertex current = currentVertex.GetComponent<Vertex>();
             switch(Commands[i]) {
-                case CommandType.C1:
-                    break;
-                case CommandType.C2:
+                case CommandType.C:
+                    if(current.CheckForConditionalEdge(conditionalEdge)) {
+                        //conditional.ReadCommands(current);
+                    }
                     break;
                 case CommandType.L1:
                     break;
@@ -124,16 +178,33 @@ public class CircuitManagerC : MonoBehaviour
         }
     }
 
+    private void ConditionalPuzzleCompleted() {
+        if(LightbuldCompleted() && FonteNegative.GetComponent<Vertex>().RightEdge.GetComponent<Edge>().isActivated()) {
+            if(!conditional.IsEmpty()) {
+                if(conditional.IfOrElseRunning()) {
+                    CompletedCondPanel.SetActive(true);
+                }
+                else {
+                    CompletedCondPanel2.SetActive(true);
+                }
+            }
+            else { 
+                PuzzleCompleted();
+            }
+        }
+    }
+
     private void PuzzleCompleted() {
         if(LightbuldCompleted() && FonteNegative.GetComponent<Vertex>().RightEdge.GetComponent<Edge>().isActivated()) {
             if(Commands.Count <= MelhorCaminho) {
-                ResultText.text = "<color=#272A7E>Melhor Caminho Alcançado!</color>";
+                ResultText.text = "<color=#11FF00>Melhor Caminho Alcançado!</color>";
                 Puzzles.GetInstance().SetStatus("Best", DesafioLevel-1);
             }
             else {
-                ResultText.text = "<color=#C84938>Melhor Caminho não foi Alcançado!</color>";
+                ResultText.text = "<color=#FF0000>Melhor Caminho não foi Alcançado!</color>";
                 Puzzles.GetInstance().SetStatus("Completo", DesafioLevel-1);
             }
+            
             ResultPanel.SetActive(true);
         }
     }

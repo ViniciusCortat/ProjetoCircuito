@@ -47,19 +47,16 @@ public class CommandImages : MonoBehaviour
     }
 
     public void Reset() {
-        foreach(GameObject o in CommandsCreated) {
-            Destroy(o);
+        for(int i=0;i<CommandsCreated.Count;i++) {
+            Destroy(CommandsCreated[i]);
         }
         CommandsCreated.Clear();
     }
 
     private void SetImage(CommandType type, Image o) {
         switch(type) {
-            case CommandType.C1:
+            case CommandType.C:
                 o.sprite = C1.sprite;
-                break;
-            case CommandType.C2:
-                o.sprite = C2.sprite;
                 break;
             case CommandType.L1:
                 o.sprite = L1.sprite;

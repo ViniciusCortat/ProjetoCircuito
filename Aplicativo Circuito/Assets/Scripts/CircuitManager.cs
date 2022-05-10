@@ -85,9 +85,7 @@ public class CircuitManager : MonoBehaviour
         for(int i=0; i < Commands.Count; i++) {
             Vertex current = currentVertex.GetComponent<Vertex>();
             switch(Commands[i]) {
-                case CommandType.C1:
-                    break;
-                case CommandType.C2:
+                case CommandType.C:
                     break;
                 case CommandType.L1:
                     break;
@@ -118,11 +116,11 @@ public class CircuitManager : MonoBehaviour
     private void PuzzleCompleted() {
         if(LightbuldCompleted() && FonteNegative.GetComponent<Vertex>().RightEdge.GetComponent<Edge>().isActivated()) {
             if(Commands.Count <= MelhorCaminho) {
-                ResultText.text = "<color=#272A7E>Melhor Caminho Alcançado!</color>";
+                ResultText.text = "<color=#11FF00>Melhor Caminho Alcançado!</color>";
                 Puzzles.GetInstance().SetStatus("Best", DesafioLevel-1);
             }
             else {
-                ResultText.text = "<color=#C84938>Melhor Caminho não foi Alcançado!</color>";
+                ResultText.text = "<color=#FF0000>Melhor Caminho não foi Alcançado!</color>";
                 Puzzles.GetInstance().SetStatus("Completo", DesafioLevel-1);
             }
             ResultPanel.SetActive(true);

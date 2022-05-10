@@ -22,8 +22,17 @@ public class Conditional
         }
     }
 
-    public CommandType CurrentCommand(int index) {
+    public List<CommandType> GetCommandByRunning() {
         if(IfRunning) {
+            return ifCommands;
+        }
+        else {
+            return elseCommands;
+        }
+    }
+
+    public CommandType GetCommandBySelected(int index) {
+        if(IfSelected) {
             return ifCommands[index];
         }
         else {
@@ -48,7 +57,27 @@ public class Conditional
         }
     }
 
+    public bool IsEmpty() {
+        if(ifCommands.Count == 0 && elseCommands.Count == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public void Clear() {
+        ifCommands.Clear();
+        elseCommands.Clear();
+    }
+
     public bool IfOrElse() {
         return IfSelected;
     }
+
+    public bool IfOrElseRunning() {
+        return IfRunning;
+    }
+
+    // public IEnumerator ReadCommands(Vertex current) {
+
+    // }
 }
