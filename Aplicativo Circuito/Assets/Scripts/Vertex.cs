@@ -53,16 +53,16 @@ public class Vertex : MonoBehaviour
     }
 
     public bool CheckForConditionalEdge(GameObject edge) {
-        if(RightEdge != null && GameObject.ReferenceEquals(edge,RightEdge) && RightEdge.activeSelf) {
+        if(RightEdge != null && GameObject.ReferenceEquals(edge,RightEdge)) {
             return true;
         }
-        if(UpEdge != null && GameObject.ReferenceEquals(edge,UpEdge) && UpEdge.activeSelf) {
+        if(UpEdge != null && GameObject.ReferenceEquals(edge,UpEdge)) {
             return true;
         }
-        if(DownEdge != null && GameObject.ReferenceEquals(edge,DownEdge) && DownEdge.activeSelf) {
+        if(DownEdge != null && GameObject.ReferenceEquals(edge,DownEdge)) {
             return true;
         }
-        if(LeftEdge != null && GameObject.ReferenceEquals(edge,LeftEdge) && LeftEdge.activeSelf) {
+        if(LeftEdge != null && GameObject.ReferenceEquals(edge,LeftEdge)) {
             return true;
         }
         return false;

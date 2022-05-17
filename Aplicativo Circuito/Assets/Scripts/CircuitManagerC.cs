@@ -26,16 +26,22 @@ public class CircuitManagerC : MonoBehaviour
     private bool LoopSelected = false;
     private bool ConditionalSelected = false;
     private Coroutine coroutine;
-    [HideInInspector]
+    public int MelhorCaminhoC1;
+    public int MelhorCaminhoC2;
+     [HideInInspector]
     public Conditional conditional;
     public CommandImages ConditionalCommandLine;
     public CommandImages CList;
+    public int CommandLimitC;
     public GameObject conditionalEdge;
     public GameObject CompletedCondPanel;
     public TextMeshProUGUI ResultCondText;
     public GameObject CompletedCondPanel2;
     public TextMeshProUGUI ResultCondText2;
     private Sprite CondEdgeSprite;
+    private bool PuzzleCompletedSecondRoute;
+    private bool FirstRouteBest;
+    private bool SecondRouteBest;
 
     void Start()
     {
@@ -45,6 +51,9 @@ public class CircuitManagerC : MonoBehaviour
         conditional = new Conditional();
         CondEdgeSprite = conditionalEdge.GetComponent<Image>().sprite;
         CList.gameObject.SetActive(false);
+        PuzzleCompletedSecondRoute = false;
+        FirstRouteBest = false;
+        SecondRouteBest = false;
     }
 
     void Update()
@@ -63,8 +72,10 @@ public class CircuitManagerC : MonoBehaviour
             Loops[Loops.Count - 1].AddCommand((CommandType) command);
         }
         if(ConditionalSelected) {
-            conditional.AddCommand((CommandType) command);
-            ConditionalCommandLine.CreateConditionalImage(conditional.Index() - 1, (CommandType) command, conditional.IfOrElse());
+            if(conditional.GetCommandListBySelected().Count < CommandLimitC) {
+                conditional.AddCommand((CommandType) command);
+                ConditionalCommandLine.CreateConditionalImage(conditional.Index() - 1, (CommandType) command, conditional.IfOrElse());
+            }
         }
     }
 
@@ -86,7 +97,7 @@ public class CircuitManagerC : MonoBehaviour
     }
 
     public void Pause() {
-        StopCoroutine(coroutine);
+        if(coroutine != null) StopCoroutine(coroutine);
         Reset();
         PlayButton.SetActive(true);
         PauseButton.SetActive(false);
@@ -149,7 +160,8 @@ public class CircuitManagerC : MonoBehaviour
             switch(Commands[i]) {
                 case CommandType.C:
                     if(current.CheckForConditionalEdge(conditionalEdge)) {
-                        //conditional.ReadCommands(current);
+                        yield return StartCoroutine(conditional.ReadCommands(currentVertex));
+                        currentVertex = conditional.CurrentVertex();
                     }
                     break;
                 case CommandType.L1:
@@ -183,9 +195,28 @@ public class CircuitManagerC : MonoBehaviour
             if(!conditional.IsEmpty()) {
                 if(conditional.IfOrElseRunning()) {
                     CompletedCondPanel.SetActive(true);
+                    if(conditional.GetCommandByRunning().Count <= MelhorCaminhoC1 && Commands.Count <= MelhorCaminho) {
+                        ResultCondText.text = "<color=#11FF00>Melhor Caminho Alcançado!</color>";
+                        FirstRouteBest = true;
+                    }
+                    else {
+                        ResultCondText.text = "<color=#FF0000>Melhor Caminho não foi Alcançado!</color>";
+                        FirstRouteBest = false;
+                    }
                 }
                 else {
-                    CompletedCondPanel2.SetActive(true);
+                    if(!PuzzleCompletedSecondRoute) {
+                        CompletedCondPanel2.SetActive(true);
+                        if(conditional.GetCommandByRunning().Count <= MelhorCaminhoC2 && Commands.Count <= MelhorCaminho) {
+                            ResultCondText2.text = "<color=#11FF00>Melhor Caminho Alcançado!</color>";
+                            SecondRouteBest = true;
+                        }
+                        else {
+                            ResultCondText2.text = "<color=#FF0000>Melhor Caminho não foi Alcançado!</color>";
+                            SecondRouteBest = false;
+                        }
+                    }
+                    PuzzleCompletedSecondRoute = true;
                 }
             }
             else { 
@@ -196,7 +227,7 @@ public class CircuitManagerC : MonoBehaviour
 
     private void PuzzleCompleted() {
         if(LightbuldCompleted() && FonteNegative.GetComponent<Vertex>().RightEdge.GetComponent<Edge>().isActivated()) {
-            if(Commands.Count <= MelhorCaminho) {
+            if(Commands.Count <= MelhorCaminho && conditional.WasUsed() && Commands.Contains(CommandType.C) && FirstRouteBest && SecondRouteBest) {
                 ResultText.text = "<color=#11FF00>Melhor Caminho Alcançado!</color>";
                 Puzzles.GetInstance().SetStatus("Best", DesafioLevel-1);
             }
