@@ -404,7 +404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MelhorCaminho: 5
-  DesafioLevel: 13
+  DesafioLevel: 14
   FontePositive: {fileID: 1001666109}
   FonteNegative: {fileID: 9149153187287462491}
   PlayButton: {fileID: 105937466}
@@ -920,6 +920,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1908856090}
+    - target: {fileID: 2387635804590999614, guid: cf203206d1397664887bfd74237fb141, type: 3}
+      propertyPath: connectedEdge
+      value: 
+      objectReference: {fileID: 2387635804665620730}
     - target: {fileID: 2387635804836385079, guid: cf203206d1397664887bfd74237fb141, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1036,6 +1040,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1908856090}
+    - target: {fileID: 2387635805717098509, guid: cf203206d1397664887bfd74237fb141, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -523
+      objectReference: {fileID: 0}
     - target: {fileID: 2387635805819857094, guid: cf203206d1397664887bfd74237fb141, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1046,10 +1054,40 @@ PrefabInstance:
       objectReference: {fileID: 1931724817}
     - target: {fileID: 2387635805837196789, guid: cf203206d1397664887bfd74237fb141, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: Desafio14
+      value: Desafio15
       objectReference: {fileID: 0}
+    - target: {fileID: 2912502172702960479, guid: cf203206d1397664887bfd74237fb141, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 519
+      objectReference: {fileID: 0}
+    - target: {fileID: 2912502173833139041, guid: cf203206d1397664887bfd74237fb141, type: 3}
+      propertyPath: connectedEdge
+      value: 
+      objectReference: {fileID: 2387635804665620731}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf203206d1397664887bfd74237fb141, type: 3}
+--- !u!114 &2387635804665620730 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7881928067914040364, guid: cf203206d1397664887bfd74237fb141, type: 3}
+  m_PrefabInstance: {fileID: 2387635804665620729}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038440992291877597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91afff7b0a7a40149a5cc6923dd6bffa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2387635804665620731 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7881928067342008216, guid: cf203206d1397664887bfd74237fb141, type: 3}
+  m_PrefabInstance: {fileID: 2387635804665620729}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038440991719786857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91afff7b0a7a40149a5cc6923dd6bffa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9149153187287462491 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6907048776171510434, guid: cf203206d1397664887bfd74237fb141, type: 3}

@@ -19,7 +19,7 @@ public class CommandImages : MonoBehaviour
 
     void Start() 
     {
-        CommandsCreated = new List<GameObject>();    
+        CommandsCreated = new List<GameObject>();   
     }
 
     public void CreateImage(int i, CommandType type) {
@@ -44,6 +44,11 @@ public class CommandImages : MonoBehaviour
         SetImage(type,o.GetComponent<Image>());
         RotateImage(type,o);
         CommandsCreated.Add(o);
+    }
+
+    public void CreateRepetitionText(int i, GameObject text) {
+        GameObject p = Instantiate(text, new Vector2(14,-4), Quaternion.identity);
+        p.transform.SetParent(CommandsCreated[i].transform,false);
     }
 
     public void Reset() {

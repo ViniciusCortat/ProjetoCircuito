@@ -21,7 +21,6 @@ public class Menu : MonoBehaviour
     }
 
     private void BlinkText() {
-        Debug.Log(ContinueText.color.a);
         if(ContinueText.color.a >= 0.99f) {
             StartCoroutine(FadeTextToZeroAlpha(1.75f,ContinueText));
         }
