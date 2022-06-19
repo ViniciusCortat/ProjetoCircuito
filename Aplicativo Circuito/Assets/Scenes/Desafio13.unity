@@ -1048,6 +1048,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: Desafio14
       objectReference: {fileID: 0}
+    - target: {fileID: 4763190470836524367, guid: cf203206d1397664887bfd74237fb141, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf203206d1397664887bfd74237fb141, type: 3}
 --- !u!1 &9149153187287462491 stripped
